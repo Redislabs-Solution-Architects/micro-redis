@@ -1,0 +1,43 @@
+{% extends 'base.html' %} {% block title %}Store{% endblock %} {% block header %}{% endblock %}
+{% block app_content %}
+    <div class="container">
+        <form
+                name="signup"
+                action="{{ action_url }}"
+                method="POST"
+                class="shadow-lg p-3 mb-5 bg-body rounded-4 container position-relative"
+        >
+            <h2 class="m-1 mb-3 h2 fw-semibold text-center">Login</h2>
+            <div class="row mb-3 justify-content-center">
+                <div class="col-4">
+                    <label for="email" class="row-form-label">Email:</label>
+                    <input type="text" class="form-control" placeholder="Email" name="email" id="email"/>
+                </div>
+            </div>
+            <div class="row mb-3 justify-content-center">
+                <div class="col-4">
+                    <label for="firstname" class="row-form-label">First Name:</label>
+                    <input type="text" class="form-control" placeholder="First Name" name="firstname" id="firstname"/>
+                </div>
+            </div>
+            <div class="row mb-3 justify-content-center">
+                <div class="col-4">
+                    <label for="lastname" class="row-form-label">Last Name:</label>
+                    <input type="text" class="form-control" placeholder="Last Name" name="lastname" id="lastname"/>
+                </div>
+            </div>
+            <div class="row mb-3 justify-content-center">
+                <div class="col-4">
+                    <label for="password" class="row-form-label">Password:</label>
+                    <input type="password" class="form-control" placeholder="Password" name="password" id="password"/>
+                </div>
+            </div>
+            <div class="mt-2 d-flex justify-content-center">
+                <input type="submit" class="btn btn-success" value="Ok"/>
+                <input type="button" class="btn" value="Cancel" onclick="location.href='/'"/>
+            </div>
+        </form>
+    </div>
+{% endblock %} {% block script %}
+    <script type="application/javascript"></script>
+{% endblock %}
