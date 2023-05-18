@@ -1,14 +1,13 @@
 from flask import render_template, redirect
 
-from app.utility import redis_conn
+from app.utility import redis_conn, session
 
 
 def view_cart(request, error_msg):
-    session_id = request.cookies.get("storesessionid")
-    if not session_id:
+    email = session.get_session(request)
+    if not email:
         return redirect("/login")
 
-    email = redis_conn.get(f"sessions:{session_id}")
     user = redis_conn.json().get(f"users:{email}")
 
     if not user:
@@ -25,11 +24,10 @@ def view_cart(request, error_msg):
 
 def update_cart(request):
     # Get email from session cookie
-    session_id = request.cookies.get("storesessionid")
-    if not session_id:
+    email = session.get_session(request)
+    if not email:
         return redirect("/login")
 
-    email = redis_conn.get(f"sessions:{session_id}")
     item = request.form.get("items")
     error_msg = None
     try:

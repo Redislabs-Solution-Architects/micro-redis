@@ -1,9 +1,8 @@
 import hashlib
-import uuid
 
 from flask import render_template, make_response, redirect
 
-from app.utility import redis_conn
+from app.utility import redis_conn, session
 
 
 def show_login(request):
@@ -23,8 +22,7 @@ def login_user(request):
         return resp
 
     # Create a session
-    session_id = uuid.uuid4().hex
-    redis_conn.set(name=f"sessions:{session_id}", value=email, ex=60)
+    session_id = session.create_session(email)
 
     resp = make_response(redirect("/viewcart"))
     resp.set_cookie(
