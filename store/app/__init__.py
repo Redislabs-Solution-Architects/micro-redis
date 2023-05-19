@@ -1,14 +1,14 @@
 from flask import Flask
 from flask import render_template, request
 
-from app.controllers import signup_controller, login_controller, cart_controller
+from app.controllers import signup_controller, login_controller, cart_controller, home_controller
 
 app = Flask(__name__)
 
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return home_controller.show_home(request)
 
 
 @app.route("/login")
