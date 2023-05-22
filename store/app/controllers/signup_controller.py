@@ -29,6 +29,10 @@ def signup_user(request):
 
     redis_conn.json().set(f"users:{user['email']}", "$", user)
 
+    # We've created a new user, so let's put that info on a Redis Stream so other services can do something with it
+
+    redis_conn.xadd("new_user", user)
+
     print(f"signup_user email: {user['email']}")
     resp = make_response(redirect("/login"))
     return resp

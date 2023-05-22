@@ -1,0 +1,1 @@
+# newuser - an app that responds to new user creation events on a stream
