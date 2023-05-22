@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "app"
+name = "newuser"
 version = "0.1.0"
 description = ""
 authors = ["Eric Preston <eric.preston@redis.com>"]
