@@ -8,6 +8,13 @@
                 class="shadow-lg p-3 mb-5 bg-body rounded-4 container position-relative"
         >
             <h2 class="m-1 mb-3 h2 fw-semibold text-center">Login</h2>
+            {% if error %}
+                <div class="row mb-3 justify-content-center">
+                    <div class="col-4">
+                        <span class="text-center">{{ error }}</span>
+                    </div>
+                </div>
+            {% endif %}
             <div class="row mb-3 justify-content-center">
                 <div class="col-4">
                     <label for="email" class="row-form-label">Email:</label>

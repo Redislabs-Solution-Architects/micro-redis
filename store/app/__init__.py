@@ -28,7 +28,7 @@ def login_user():
 
 @app.route("/signup")
 def show_signup():
-    return signup_controller.show_signup()
+    return signup_controller.show_signup(request)
 
 
 @app.route("/signupuser", methods=["POST"])

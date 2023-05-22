@@ -1,8 +1,7 @@
-import hashlib
 import json
 import urllib
 
-from flask import render_template, make_response, redirect
+from flask import render_template
 
 from app.utility import redis_conn, session
 
@@ -27,4 +26,3 @@ def show_home(request):
             user_name = f"{user['first_name']} {user['last_name']}"
 
     return render_template("index.html", name=user_name, city=city, temp=temp)
-
