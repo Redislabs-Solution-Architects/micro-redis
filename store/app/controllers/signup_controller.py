@@ -1,8 +1,12 @@
 import hashlib
+import os
 
 from flask import render_template, make_response, redirect
 
 from app.utility import redis_conn
+
+
+STREAM_NAME = os.getenv("REDIS_USER_STREAM", "new_user")
 
 
 def show_signup(request):
@@ -31,7 +35,8 @@ def signup_user(request):
 
     # We've created a new user, so let's put that info on a Redis Stream so other services can do something with it
 
-    redis_conn.xadd("new_user", user)
+    del user["password"]
+    redis_conn.xadd(STREAM_NAME, user)
 
     print(f"signup_user email: {user['email']}")
     resp = make_response(redirect("/login"))
