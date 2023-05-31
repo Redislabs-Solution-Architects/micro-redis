@@ -8,7 +8,7 @@ from utility import redis_conn
 
 
 def get_weather(city):
-    key = f"weather:${city}"
+    key = f"weather:{city}"
 
     start_time = time.time()
 
@@ -21,6 +21,7 @@ def get_weather(city):
         print(f"Found in cache time: {total_time}")
 
         cache_entry["total_time"] = total_time
+        cache_entry["from_cache"] = "true"
         return cache_entry
     else:
         api_key = os.getenv("WEATHER_API_KEY")
@@ -31,6 +32,9 @@ def get_weather(city):
         url = get_weather_endpoint(city)
         try:
             response = requests.get(url)
+            if response.status_code != 200:
+                return response.json()
+
             weather_json = response.json()
             redis_conn.json().set(key, "$", weather_json)
             end_time = time.time()
@@ -38,6 +42,7 @@ def get_weather(city):
             print(f"Not found time: {total_time}")
 
             weather_json["total_time"] = total_time
+            weather_json["from_cache"] = "false"
             return weather_json
         except Exception as ex:
             if len(ex.args) > 0:
