@@ -6,6 +6,11 @@
     <title>Weather</title>
 </head>
 <body>
-    The weather in {{city}} is Sunny
+    <p>
+        The weather in {{city}} is:
+    </p>
+    <pre>
+        {{weather|tojson_pretty}}
+    </pre>
 </body>
 </html>
