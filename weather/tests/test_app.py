@@ -11,4 +11,4 @@ def test_index():
 
 def test_get_weather():
     response = client.get("/get_weather/xyz")
-    assert b'{"Error":"No variable WEATHER_API_KEY defined"}\n' in response.data
+    assert b'{"Code":401,"Error":"Calling weather endpoint failed","Message":"Unauthorized"}\n' in response.data
