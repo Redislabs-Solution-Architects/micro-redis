@@ -1,5 +1,5 @@
 import json
-import urllib
+import requests
 
 from flask import render_template
 
@@ -10,14 +10,18 @@ def show_home(request):
     city = request.args.get("city", "Chicago")
 
     # Get the current weather for the city from our weather microservice
-    encoded_city = urllib.parse.quote_plus(city)
-    url = f"http://epreston.io:5050//get_weather/{encoded_city}"
-    response = urllib.request.urlopen(url)
-    data = response.read()
-    weather_json = json.loads(data)
-    temp = weather_json["main"]["temp"]
+    url = f"http://epreston.io:5050//get_weather/{city}"
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            weather_json = response.json()
+            temp = weather_json["main"]["temp"]
+        else:
+            temp = "Unknown"
+    except requests.exceptions.ConnectionError:
+        temp = "Unknown"
 
-    user_name = "Nobody"
+    user_name = ""
     email = session.get_session(request)
 
     if email:

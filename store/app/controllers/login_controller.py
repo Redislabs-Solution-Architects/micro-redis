@@ -3,6 +3,7 @@ import hashlib
 from flask import render_template, make_response, redirect
 
 from app.utility import redis_conn, session
+from app.utility.identity import validate_identity
 
 
 def show_login(request):
@@ -15,9 +16,7 @@ def login_user(request):
     password = request.form.get("password")
 
     # Validate credentials
-    user = redis_conn.json().get(f"users:{email}")
-    pass_hash = hashlib.md5(password.encode()).hexdigest()
-    if pass_hash != user["password"]:
+    if not validate_identity(email, password):
         resp = make_response(redirect("/login?error=Invalid+credentials"))
         return resp
 
@@ -33,7 +32,9 @@ def login_user(request):
     return resp
 
 
-def logout_user():
+def logout_user(request):
+    session_id = request.cookies.get("storesessionid")
+    session.delete_session(session_id)
     resp = make_response(render_template("index.html"))
     resp.delete_cookie("storesessionid")
     return resp

@@ -18,7 +18,7 @@ def show_login():
 
 @app.route("/logout")
 def logout():
-    return login_controller.logout_user()
+    return login_controller.logout_user(request)
 
 
 @app.route("/loginuser", methods=["POST"])
