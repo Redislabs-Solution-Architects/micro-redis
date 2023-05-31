@@ -1,4 +1,5 @@
 import os
+import time
 
 import requests
 
@@ -9,10 +10,17 @@ from utility import redis_conn
 def get_weather(city):
     key = f"weather:${city}"
 
+    start_time = time.time()
+
     # Try the cache first
     cache_entry = redis_conn.json().get(key)
 
     if cache_entry is not None:
+        end_time = time.time()
+        total_time = (end_time - start_time) * 1000
+        print(f"Found in cache time: {total_time}")
+
+        cache_entry["total_time"] = total_time
         return cache_entry
     else:
         api_key = os.getenv("WEATHER_API_KEY")
@@ -25,6 +33,11 @@ def get_weather(city):
             response = requests.get(url)
             weather_json = response.json()
             redis_conn.json().set(key, "$", weather_json)
+            end_time = time.time()
+            total_time = (end_time - start_time) * 1000
+            print(f"Not found time: {total_time}")
+
+            weather_json["total_time"] = total_time
             return weather_json
         except Exception as ex:
             if len(ex.args) > 0:

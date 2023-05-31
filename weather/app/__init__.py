@@ -37,13 +37,4 @@ def render_weather():
 
 @app.route("/get_weather/<city>")
 def get_weather(city):
-    start_time = time.time()
-
-    the_weather = weather.get_weather(city)
-
-    end_time = time.time()
-    total_time = (end_time - start_time) * 1000
-    print(f"Total time: {total_time}")
-
-    the_weather["total_time"] = total_time
-    return the_weather
+    return weather.get_weather(city)
