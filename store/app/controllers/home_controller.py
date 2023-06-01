@@ -1,3 +1,4 @@
+import os
 import requests
 from flask import render_template
 
@@ -8,7 +9,8 @@ def show_home(request):
     city = request.args.get("city", "Chicago")
 
     # Get the current weather for the city from our weather microservice
-    url = f"http://epreston.io:5050//get_weather/{city}"
+    weather_host = os.getenv("WEATHER_HOST", "http://localhost:5000")
+    url = f"{weather_host}/get_weather/{city}"
     try:
         response = requests.get(url)
         if response.status_code == 200:
