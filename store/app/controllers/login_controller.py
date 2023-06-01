@@ -27,7 +27,7 @@ def login_user(request):
     resp.set_cookie(
         key="storesessionid",
         value=session_id,
-        httponly=True,
+        httponly=True
     )
     return resp
 

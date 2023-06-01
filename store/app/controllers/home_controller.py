@@ -1,6 +1,4 @@
-import json
 import requests
-
 from flask import render_template
 
 from app.utility import redis_conn, session
