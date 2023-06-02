@@ -21,7 +21,7 @@ def get_weather(city):
         print(f"Found in cache time: {total_time}")
 
         cache_entry["total_time"] = total_time
-        cache_entry["from_cache"] = "true"
+        cache_entry["from_cache"] = True
         return cache_entry
     else:
         api_key = os.getenv("WEATHER_API_KEY")
@@ -42,7 +42,7 @@ def get_weather(city):
             print(f"Not found time: {total_time}")
 
             weather_json["total_time"] = total_time
-            weather_json["from_cache"] = "false"
+            weather_json["from_cache"] = False
             return weather_json
         except Exception as ex:
             if len(ex.args) > 0:
