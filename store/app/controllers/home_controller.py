@@ -9,7 +9,12 @@ def show_home(request):
     city = request.args.get("city", "Chicago")
 
     # Get the current weather for the city from our weather microservice
-    weather_host = os.getenv("WEATHER_HOST", "http://localhost:5000")
+    # We'll use Redis as our "discovery service" to find other microservices
+    weather_host = redis_conn.get("WEATHER_HOST")
+
+    if weather_host is None:
+        weather_host = os.getenv("WEATHER_HOST", "http://localhost:5000")
+
     url = f"{weather_host}/get_weather/{city}"
     try:
         response = requests.get(url)
