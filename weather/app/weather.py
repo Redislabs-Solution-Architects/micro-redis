@@ -37,6 +37,7 @@ def get_weather(city):
 
             weather_json = response.json()
             redis_conn.json().set(key, "$", weather_json)
+            redis_conn.expire(key, 60)
             end_time = time.time()
             total_time = (end_time - start_time) * 1000
             print(f"Not found time: {total_time}")
