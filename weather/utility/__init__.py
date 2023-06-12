@@ -15,6 +15,11 @@ redis_conn = redis.StrictRedis(
     decode_responses=True)
 
 
+weather_ttl = redis_conn.get("weather_ttl")
+if weather_ttl is None:
+    weather_ttl = 60
+
+
 def get_weather_endpoint(city):
     api_key = os.getenv("WEATHER_API_KEY")
     endpoint = os.getenv("WEATHER_ENDPOINT")

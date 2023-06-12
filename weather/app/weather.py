@@ -4,7 +4,7 @@ import time
 import requests
 
 from utility import get_weather_endpoint
-from utility import redis_conn
+from utility import redis_conn, weather_ttl
 
 
 def get_weather(city):
@@ -37,7 +37,7 @@ def get_weather(city):
 
             weather_json = response.json()
             redis_conn.json().set(key, "$", weather_json)
-            redis_conn.expire(key, 60)
+            redis_conn.expire(key, weather_ttl)
             end_time = time.time()
             total_time = (end_time - start_time) * 1000
             print(f"Not found time: {total_time}")
