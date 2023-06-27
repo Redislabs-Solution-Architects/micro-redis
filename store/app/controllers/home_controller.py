@@ -16,6 +16,7 @@ def show_home(request):
         weather_host = os.getenv("WEATHER_HOST", "http://localhost:5000")
 
     url = f"{weather_host}/get_weather/{city}"
+    print(f"show_home weather url: {url}")
     try:
         response = requests.get(url)
         if response.status_code == 200:
