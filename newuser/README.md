@@ -30,6 +30,14 @@ poetry run python app/new_user_service.py consumer
 
 I may add some other options later, hence the command-line argument
 
+## Docker
+To run with Docker, from the parent folder, build:
+```bash
+docker-compose -f newuser/docker-compose.yml build
+docker-compose -f docker-compose.yml -f newuser/docker-compose.yml up -d
+docker logs new-user-app
+```
+
 ## Testing
 ```bash
 poetry run pytest

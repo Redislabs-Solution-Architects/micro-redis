@@ -2,7 +2,7 @@ import json
 import os
 import sys
 
-from app.redis_connection import RedisConnection
+from redis_connection import RedisConnection
 from redis import ResponseError
 
 STREAM_NAME = os.getenv("REDIS_USER_STREAM", "new_user")
@@ -87,6 +87,7 @@ class NewUserService:
 
     @classmethod
     def run_lab(cls, args):
+        print(f"args: {args}")
         if len(args) == 2:
             if args[1] == 'consumer':
                 cls.consumer()
