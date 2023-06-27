@@ -20,19 +20,7 @@ poetry run flask run
 ```
 
 ## Docker
-You may run all three service plus the Redis database from docker. We've provided docker-compose files for each service,
-as well as for Redis. You must build each service image, then run docker-compose to bring them up.
-
-By default, weather is listening on port 5050, store on 5051, Redis on 6379
-
-```bash
-docker-compose -f weather/docker-compose.yml build
-docker-compose -f store/docker-compose.yml build
-docker-compose -f newuser/docker-compose.yml build
-docker-compose -f docker-compose.yml -f weather/docker-compose.yml -f store/docker-compose.yml -f newuser/docker-compose.yml up -d
-docker logs new-user-app
-```
-
+To run with Docker see the parent folder README
 
 ## Testing
 ```bash

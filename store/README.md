@@ -23,7 +23,8 @@ poetry shell
 poetry run python flask run
 ```
 
-I may add some other options later, hence the command-line argument
+## Docker
+To run with Docker see the parent folder README
 
 ## Testing
 ```bash
