@@ -2,7 +2,7 @@ import json
 import os
 import sys
 
-from redis_connection import RedisConnection
+from util.redis_connection import RedisConnection
 from redis import ResponseError
 
 STREAM_NAME = os.getenv("REDIS_USER_STREAM", "new_user")

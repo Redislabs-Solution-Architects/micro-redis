@@ -1,0 +1,14 @@
+version: '3.9'
+
+services:
+  new-user-app:
+    image: new-user-app
+    container_name: new-user-app
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '5052:5052'
