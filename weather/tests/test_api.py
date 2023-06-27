@@ -1,6 +1,6 @@
 import unittest
 
-from utility import get_weather_endpoint
+from app.utility import get_weather_endpoint
 
 
 class TestWeather(unittest.TestCase):

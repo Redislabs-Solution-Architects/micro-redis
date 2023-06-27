@@ -3,8 +3,8 @@ import time
 
 import requests
 
-from utility import get_weather_endpoint
-from utility import redis_conn, weather_ttl
+from app.utility import get_weather_endpoint
+from app.utility import redis_conn, weather_ttl
 
 
 def get_weather(city):

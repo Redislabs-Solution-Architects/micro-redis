@@ -3,7 +3,7 @@ import time
 import unittest
 
 from app.new_user_service import NewUserService
-from util.redis_connection import RedisConnection
+from app.util.redis_connection import RedisConnection
 
 from dotenv import load_dotenv
 

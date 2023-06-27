@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 
-from utility import redis_conn
+from app.utility import redis_conn
 from app.weather import get_weather
 
 

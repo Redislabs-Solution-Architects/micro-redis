@@ -2,10 +2,11 @@ import json
 import os
 import sys
 
-from util.redis_connection import RedisConnection
+from app.util.redis_connection import RedisConnection
 from redis import ResponseError
 
 STREAM_NAME = os.getenv("REDIS_USER_STREAM", "new_user")
+RETRY_COUNT = os.getenv("REDIS_RETRY_COUNT", "100000")
 
 
 class NewUserService:
@@ -21,7 +22,7 @@ class NewUserService:
         #   to store the ID of the last entry read each time you read
         #   an entry off of the stream, then use that in the next call
         #   to XREAD.
-        # * Block for up to 2 seconds or until the stream has a new entry.
+        # * Block for up to 4 seconds or until the stream has a new entry.
         # * If the stream has no new entries (XREAD returns null or
         #   an empty result list):
         #     * Increment retryCount
@@ -39,7 +40,7 @@ class NewUserService:
         # see https://redis-py.readthedocs.io/en/stable/#redis.Redis.xread
 
         try:
-            results = cls.redis.xread({STREAM_NAME: last_entry_id}, count=1, block=2000)
+            results = cls.redis.xread({STREAM_NAME: last_entry_id}, count=1, block=4000)
             return results
         except ResponseError as inst:
             print(f"Stream name: {STREAM_NAME}")
@@ -51,8 +52,8 @@ class NewUserService:
     def consumer(cls):
         """
         Reads entries from a stream, blocking for up to
-        2 seconds each time it accesses the stream.  If
-        the stream has no new entries 5 consecutive times,
+        N seconds each time it accesses the stream.  If
+        the stream has no new entries RETRY_COUNT consecutive times,
         the consumer stops trying and returns.
         """
         print('Starting consumer.')
@@ -61,11 +62,11 @@ class NewUserService:
 
         last_entry_id = '0-0'
 
-        while retry_count < 5:
+        while retry_count < int(RETRY_COUNT):
             results = cls.read_stream(last_entry_id)
 
             if not results:
-                print('Stream has no new entries.')
+                print(f"Stream has no new entries. Retry count: {retry_count}")
                 retry_count += 1
             else:
                 # Get the first entry returned for the first stream read.

@@ -8,7 +8,7 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - REDIS_USER_STREAM=new_user
-      - WEATHER_HOST=http://localhost:5050
+      - WEATHER_HOST=http://weather:5050
     build:
       context: .
       dockerfile: Dockerfile

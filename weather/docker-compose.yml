@@ -4,6 +4,7 @@ services:
   weather-app:
     image: weather-app
     container_name: weather-app
+    hostname: weather
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
